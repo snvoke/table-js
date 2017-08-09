@@ -43,6 +43,7 @@ table {
   tr {
     display: flex;
     flex-direction: row;
+    text-align: center;
   }
 
   td {
@@ -89,6 +90,7 @@ input {
 
 .form {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   background-color: $gray;
   padding: 10px;

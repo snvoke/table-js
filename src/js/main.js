@@ -66,9 +66,10 @@ function CreateTable(fields, rows, meta) {
 
   this.addColumn = function(n) {
     var td = document.createElement('td');
-
     var label = document.createElement('label');
     label.className = 'text';
+    var input = document.createElement('input');
+    input.className = 'text-field';
 
     if (num < column.length) {
       label.textContent = column[n];
@@ -76,14 +77,39 @@ function CreateTable(fields, rows, meta) {
       label.textContent = '...';
     }
 
-
-    var input = document.createElement('input');
-    input.className = 'text-field';
-
     td.appendChild(label);
     td.appendChild(input);
 
     return td;
+  }
+
+  this.insert_row = function(index) {
+    table.insertRow(index).insertCell(0).innerHTML = 'новая строка';
+  }
+
+  this.add_row = function() {
+    var tr = document.createElement('tr');
+    table.appendChild(tr).insertCell(0).innerHTML = 'новая строка';
+  }
+
+  this.get_data = function() {
+    var arrayData = [];
+    var textColumn = table.getElementsByTagName("label");
+
+    for (let i = 0; i < textColumn.length; i++) {
+      arrayData.push(textColumn[i].innerHTML);
+    }
+
+    var jsonData = JSON.stringify(arrayData);
+    console.log(jsonData);
+  }
+
+  this.clean_table = function() {
+    var textColumn = table.getElementsByTagName("label");
+
+    for (let i = 0; i < textColumn.length; i++) {
+      textColumn[i].innerHTML = "";
+    }
   }
 }
 
@@ -102,10 +128,11 @@ function addElement(event) {
     addBgRow = '0, 0, 0';
   }
 
-  var result = new CreateTable(arrayTitle, addNumRow, addBgRow).show();
+  this.result = new CreateTable(arrayTitle, addNumRow, addBgRow).show();
 }
 
-
+// var result = this.result;
+// var cleanTable = this.cleanTable;
 var table = document.getElementById('table');
 var form = document.getElementById('form');
 var add = document.getElementById('add');
