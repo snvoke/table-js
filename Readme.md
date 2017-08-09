@@ -6,4 +6,4 @@
 - get_data() - получает JSON объект данных из таблицы.
 - clean_table() - очищает таблицу от данных
 
-[Демо](http://snvoke.github.io/table-js/)
+[Демо](http://snvoke.github.io/table/)
