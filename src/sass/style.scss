@@ -96,6 +96,10 @@ input {
   input {
     flex-grow: 1;
   }
+
+  #add-row {
+    flex-grow: 0;
+  }
 }
 
 button {
@@ -111,4 +115,16 @@ button {
   &:hover {
     background-color: lighten($ligh-black, 10%);
   }
+}
+
+.first-row td {
+  background-color: #32B9B5;
+}
+
+.even-row td {
+  background-color: #F79D2D;
+}
+
+.odd-row td {
+  background-color: #C2390D;
 }

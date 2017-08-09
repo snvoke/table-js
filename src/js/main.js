@@ -16,16 +16,42 @@ function change(event) {
   activeField.classList.toggle('editing');
 }
 
-function CreateTable(rows, cols) {
-  // var array = arrayTitle;
+function CreateTable(fields, rows, meta) {
+  var column = fields.split(', ');
   var row = rows;
-  var column = cols.split(', ');
+  var colorBg = meta.split(', ');
   var num = 0;
 
   this.show = function() {
+    table.innerHTML = '';
+
     for (let i = 0; i < row; i++) {
       table.appendChild(this.addRow(i));
     }
+
+    if (colorBg[0] === '1') {
+      let firstRow = table.getElementsByTagName('tr')[0];
+      firstRow.classList.add('first-row');
+    }
+
+    let arrayRow = table.getElementsByTagName("tr");
+
+    if (colorBg[1] === '1') {
+      for (let i = 0; i <= arrayRow.length; i++) {
+        if (i % 2 == 1) {
+          arrayRow[i].classList.add('even-row');
+        }
+      }
+    }
+
+    if (colorBg[2] === '1') {
+      for (let j = 0; j <= arrayRow.length; j++) {
+        if (j % 2 == 0) {
+          arrayRow[j].classList.add('odd-row');
+        }
+      }
+    }
+
     return this;
   }
 
@@ -47,7 +73,7 @@ function CreateTable(rows, cols) {
     if (num < column.length) {
       label.textContent = column[n];
     } else {
-      label.textContent = 'empty';
+      label.textContent = '...';
     }
 
 
@@ -66,14 +92,17 @@ function addElement(event) {
 
   var arrayTitle = addTitle.value;
   var addNumRow = document.getElementById('add-row').value;
+  var addBgRow = document.getElementById('add-bg-row').value;
 
   if (arrayTitle === '' && addNumRow === '') {
     alert('error');
   }
 
+  if (addBgRow === '') {
+    addBgRow = '0, 0, 0';
+  }
 
-
-  var result = new CreateTable(addNumRow, arrayTitle).show();
+  var result = new CreateTable(arrayTitle, addNumRow, addBgRow).show();
 }
 
 
