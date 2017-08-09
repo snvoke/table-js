@@ -17,9 +17,10 @@ function change(event) {
 }
 
 function CreateTable(rows, cols) {
-
+  // var array = arrayTitle;
   var row = rows;
-  var column = cols;
+  var column = cols.split(', ');
+  var num = 0;
 
   this.show = function() {
     for (let i = 0; i < row; i++) {
@@ -30,8 +31,9 @@ function CreateTable(rows, cols) {
 
   this.addRow = function(n) {
     var tr = document.createElement('tr');
-    for (let i = 0; i < column; i++) {
+    for (let i = 0; i < column.length; i++) {
       tr.appendChild(this.addColumn(i));
+      num++;
     }
     return tr;
   }
@@ -41,7 +43,13 @@ function CreateTable(rows, cols) {
 
     var label = document.createElement('label');
     label.className = 'text';
-    label.textContent = n;
+
+    if (num < column.length) {
+      label.textContent = column[n];
+    } else {
+      label.textContent = 'empty';
+    }
+
 
     var input = document.createElement('input');
     input.className = 'text-field';
@@ -63,9 +71,9 @@ function addElement(event) {
     alert('error');
   }
 
-  // var array = arrayTitle.split(', ');
 
-  var result = new CreateTable(addNumRow, 3).show();
+
+  var result = new CreateTable(addNumRow, arrayTitle).show();
 }
 
 
