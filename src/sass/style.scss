@@ -1,0 +1,114 @@
+@import "normalize/import-now";
+@import "variables";
+
+body {
+  background-color: $gray;
+  font-family: 'Segoe UI', 'Roboto', Tahoma, sans-serif;
+}
+
+.container {
+  padding: 0 10px;
+}
+
+main {
+  max-width: 960px;
+  margin: 80px auto;
+  overflow: hidden;
+  background-color: $white;
+  border-radius: 4px;
+  box-shadow: 0 3px 3px 0 rgba($black, 0.1),
+              0 3px 2px -2px rgba($black, 0.2),
+              0 2px 5px 0 rgba($black, 0.3);
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $ligh-black;
+  color: $white;
+
+  h1 {
+    display: inline-block;
+    margin: 1rem auto;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+}
+
+table {
+  width: 100%;
+  border-spacing: 10px;
+
+  tr {
+    display: flex;
+    flex-direction: row;
+  }
+
+  td {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    padding: 1rem;
+    background-color: darken($white, 5%);
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($white, 10%);
+    }
+  }
+}
+
+.text {
+  font-size: 1rem;
+}
+
+input {
+  margin: 0;
+  padding: .25rem .5rem;
+  font-size: 1rem;
+  font-family: 'Segoe UI', 'Roboto', Tahoma, sans-serif;
+  line-height: 26px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  outline: none;
+}
+
+.text-field {
+  display: none;
+}
+
+.editing .text {
+  display: none;
+}
+
+.editing .text-field {
+  flex: 1;
+  display: block;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  background-color: $gray;
+  padding: 10px;
+
+  input {
+    flex-grow: 1;
+  }
+}
+
+button {
+  margin-left: 10px;
+  padding: .5rem;
+  line-height: 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: $ligh-black;
+  color: $white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($ligh-black, 10%);
+  }
+}
