@@ -93,14 +93,18 @@ function CreateTable(fields, rows, meta) {
   }
 
   this.get_data = function() {
-    var arrayData = [];
+    var objectData = {};
     var textColumn = table.getElementsByTagName("label");
 
     for (let i = 0; i < textColumn.length; i++) {
-      arrayData.push(textColumn[i].innerHTML);
+      objectData[textColumn[i].innerHTML] = i;
     }
 
-    var jsonData = JSON.stringify(arrayData);
+    var jsonData = JSON.stringify(objectData, function(key, value) {
+      if (key == '...') return undefined;
+      return value;
+    });
+
     console.log(jsonData);
   }
 
@@ -131,13 +135,35 @@ function addElement(event) {
   this.result = new CreateTable(arrayTitle, addNumRow, addBgRow).show();
 }
 
+function getDataJson(event) {
+  event.preventDefault();
+
+  var objectData = {};
+  var textColumn = table.getElementsByTagName("label");
+
+  for (let i = 0; i < textColumn.length; i++) {
+    objectData[textColumn[i].innerHTML] = i;
+  }
+
+  var jsonData = JSON.stringify(objectData, function(key, value) {
+    if (key == '...') return undefined;
+    return value;
+  });
+
+  inputDataJson.value = jsonData;
+
+}
+
 // var result = this.result;
 // var cleanTable = this.cleanTable;
 var table = document.getElementById('table');
 var form = document.getElementById('form');
 var add = document.getElementById('add');
 var addTitle = document.getElementById('add-title');
+var inputDataJson = document.getElementById('json-data');
+var btnDataJson = document.getElementById('get-json');
 var activeField;
 
 form.addEventListener('submit', addElement);
 table.addEventListener('click', change);
+btnDataJson.addEventListener('click', getDataJson);
