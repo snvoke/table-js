@@ -1,19 +1,22 @@
+'use strict';
+
 function change(event) {
-  activeField = event.target;
+  if (event.target.tagName == 'TD') {
+    if (activeField) {
+      activeField.classList.remove('editing');
+      let text = activeField.querySelector('.text');
+      let textField = activeField.querySelector('.text-field');
+      text.textContent = textField.value;
+    }
 
-  var text = activeField.querySelector('.text');
-  var textField = activeField.querySelector('.text-field');
-  var isEditing = activeField.classList.contains('editing');
+    activeField = event.target;
 
-  if (activeField.tagName !== 'TD') return;
+    let text = activeField.querySelector('.text');
+    let textField = activeField.querySelector('.text-field');
 
-  if (isEditing) {
-    text.textContent = textField.value;
-  } else {
     textField.value = text.textContent;
+    activeField.classList.add('editing');
   }
-
-  activeField.classList.toggle('editing');
 }
 
 function CreateTable(fields, rows, meta) {
@@ -53,7 +56,7 @@ function CreateTable(fields, rows, meta) {
     }
 
     return this;
-  }
+  };
 
   this.addRow = function(n) {
     var tr = document.createElement('tr');
@@ -62,7 +65,7 @@ function CreateTable(fields, rows, meta) {
       num++;
     }
     return tr;
-  }
+  };
 
   this.addColumn = function(n) {
     var td = document.createElement('td');
@@ -81,16 +84,16 @@ function CreateTable(fields, rows, meta) {
     td.appendChild(input);
 
     return td;
-  }
+  };
 
   this.insert_row = function(index) {
     table.insertRow(index).insertCell(0).innerHTML = 'новая строка';
-  }
+  };
 
   this.add_row = function() {
     var tr = document.createElement('tr');
     table.appendChild(tr).insertCell(0).innerHTML = 'новая строка';
-  }
+  };
 
   this.get_data = function() {
     var objectData = {};
@@ -106,7 +109,7 @@ function CreateTable(fields, rows, meta) {
     });
 
     console.log(jsonData);
-  }
+  };
 
   this.clean_table = function() {
     var textColumn = table.getElementsByTagName("label");
@@ -114,7 +117,7 @@ function CreateTable(fields, rows, meta) {
     for (let i = 0; i < textColumn.length; i++) {
       textColumn[i].innerHTML = "";
     }
-  }
+  };
 }
 
 function addElement(event) {
@@ -138,6 +141,7 @@ function addElement(event) {
 function getDataJson(event) {
   event.preventDefault();
 
+  var valueDataJson = inputDataJson.value;
   var objectData = {};
   var textColumn = table.getElementsByTagName("label");
 
@@ -151,11 +155,9 @@ function getDataJson(event) {
   });
 
   inputDataJson.value = jsonData;
-
 }
 
-// var result = this.result;
-// var cleanTable = this.cleanTable;
+
 var table = document.getElementById('table');
 var form = document.getElementById('form');
 var add = document.getElementById('add');
@@ -163,6 +165,7 @@ var addTitle = document.getElementById('add-title');
 var inputDataJson = document.getElementById('json-data');
 var btnDataJson = document.getElementById('get-json');
 var activeField;
+
 
 form.addEventListener('submit', addElement);
 table.addEventListener('click', change);
