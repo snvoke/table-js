@@ -17,6 +17,19 @@ function change(event) {
     textField.value = text.textContent;
     activeField.classList.add('editing');
   }
+
+  if (event.target.tagName !== 'TD') {
+    if (activeField) {
+      if (event.target.tagName === 'INPUT') return;
+      if (event.target.tagName === 'LABEL') return;
+
+      activeField.classList.remove('editing');
+      let text = activeField.querySelector('.text');
+      let textField = activeField.querySelector('.text-field');
+      text.textContent = textField.value;
+    }
+  }
+
 }
 
 function CreateTable(fields, rows, meta) {
@@ -142,31 +155,56 @@ function getDataJson(event) {
   event.preventDefault();
 
   var valueDataJson = inputDataJson.value;
-  var objectData = {};
+  var arrayData = [];
+  var arrayKeyColumn = ['firstColumn', 'secondColumn', 'thirdColumn', 'fourthColumn', 'fifthColumn', 'sixthColumn', 'seventhColumn', 'eighthColumn', 'ninthColumn', 'tenthColumn']
+  // var objectData = {};
+  var tableRow = table.getElementsByTagName("tr");
   var textColumn = table.getElementsByTagName("label");
+  // var lengthColumn = document.getElementsByTagName("tr")[0].getElementsByTagName("label");
 
-  for (let i = 0; i < textColumn.length; i++) {
-    objectData[textColumn[i].innerHTML] = i;
+
+  // console.log(lengthColumn);
+  // console.log(textColumn);
+  // console.log(tableRow);
+
+
+
+  for (let i = 0; i < tableRow.length; i++) {
+    let lengthColumn = document.getElementsByTagName("tr")[i].getElementsByTagName("label");
+    var objectData = {};
+
+    for (let j = 0; j < lengthColumn.length; j++) {
+      objectData[arrayKeyColumn[j]] = lengthColumn[j].innerHTML;
+    }
+
+    arrayData.push(objectData);
   }
 
-  var jsonData = JSON.stringify(objectData, function(key, value) {
-    if (key == '...') return undefined;
+  // for (let i = 0; i < textColumn.length; i++) {
+  //   objectData[arrayKeyColumn[i]] = textColumn[i].innerHTML;
+  // }
+
+  var jsonData = JSON.stringify(arrayData, function(key, value) {
+    if (value == '...') return undefined;
     return value;
   });
 
   inputDataJson.value = jsonData;
+
 }
 
-
+var main = document.getElementById('main');
 var table = document.getElementById('table');
+var td = document.getElementsByTagName('td');
 var form = document.getElementById('form');
 var add = document.getElementById('add');
 var addTitle = document.getElementById('add-title');
 var inputDataJson = document.getElementById('json-data');
 var btnDataJson = document.getElementById('get-json');
 var activeField;
+// var lengthColumn = document.getElementsByTagName("tr")[0].getElementsByTagName("label");
 
 
 form.addEventListener('submit', addElement);
-table.addEventListener('click', change);
+main.addEventListener('click', change);
 btnDataJson.addEventListener('click', getDataJson);
